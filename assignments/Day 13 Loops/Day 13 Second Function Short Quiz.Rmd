@@ -1,0 +1,32 @@
+---
+title: "Untitled"
+author: "Carey Kopeikin"
+date: "2023-04-14"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+set.seed(1)
+```
+
+
+
+#Quiz
+
+A. Create a function that takes two inputs a starting number and an end number and outputs two random numbers in between those numbers. 
+```{r}
+
+```
+
+B. Test your function by imputing 10 and 20 into your function.
+```{r}
+
+```
+
+
+
+
+

@@ -10,7 +10,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE, error=TRUE)
 ```
 
-1. A study in 1994 examined dogs to determine whether there is an increased risk of cancer in dogs that are exposed to the herbicide 2,4-Dichlorophenoxyacetic acid (2,4-D). The results of the dogs who were exposed are in ```cancer_in_dogs1.csv```. In general 32% of dogs who are not exposed to the herbicide develop cancer. 
+1. A study in 1994 examined dogs to determine whether there is an increased risk of cancer in dogs that are exposed to the herbicide 2,4-Dichlorophenoxyacetic acid (2,4-D). The results of the dogs who were exposed are in ```../../data/cancer_in_dogs1.csv```. In general 32% of dogs who are not exposed to the herbicide develop cancer. 
 
 a) Write appropriate hypotheses.
 
@@ -33,7 +33,7 @@ If you said Type II then .05
 f) Perform the test and find the p-value using the alpha you selected in part e.
 
 ```{r}
-dogs.data <- read.csv("cancer_in_dogs1.csv")
+dogs.data <- read.csv("../../data/cancer_in_dogs1.csv")
 head(dogs.data) 
 # number of successes
 x <- sum(dogs.data$response == "cancer")
@@ -93,7 +93,7 @@ h) State your conclusion.
 
 
 
-2. Californians love there In-N-Out Burgers. It is so popular that your friend from California states that 70% of Californians would say In-N-Out makes the best burgers. You think it is less and Collect a survey of 500 respondents. The file ```burger.csv``` contains the results. We have information on their gender and their favorite burger joint. Set up an appropriate hypothesis test to see who wins the bet? 
+2. Californians love there In-N-Out Burgers. It is so popular that your friend from California states that 70% of Californians would say In-N-Out makes the best burgers. You think it is less and Collect a survey of 500 respondents. The file ```../../data/burger.csv``` contains the results. We have information on their gender and their favorite burger joint. Set up an appropriate hypothesis test to see who wins the bet? 
 
 a) Write appropriate hypotheses.
 
@@ -107,7 +107,7 @@ e) Based on your answer to part d) is it better to use an alpha level of .05 or 
 
 f) Perform the test and find the p-value using the alpha you selected in part e.
 ```{r}
-burger.data <- read.csv("burger.csv")
+burger.data <- read.csv("../../data/burger.csv")
 head(dogs.data) 
 # number of successes
 x <- sum(dogs.data$response == "cancer")

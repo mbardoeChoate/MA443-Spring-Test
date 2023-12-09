@@ -32,12 +32,12 @@ But back when you were in elementary school you may have seen this type of funct
 They all do the same thing which is take an input and produce a unique output.
 
 
-In R we are doing something similar but quite a bit different. Lets re-download the loan50.csv that we looked at in the fall.
+In R we are doing something similar but quite a bit different. Lets re-download the ```../../data/loan50.csv``` that we looked at in the fall.
 
 https://www.openintro.org/data/index.php?data=loan50
 
 ```{r}
-loans <- read.csv("loan50.csv")
+loans <- read.csv("../../data/loan50.csv")
 ```
 
 ```{r}
