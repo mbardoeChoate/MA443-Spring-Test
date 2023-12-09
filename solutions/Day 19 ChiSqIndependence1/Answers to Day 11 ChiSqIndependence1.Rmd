@@ -1,0 +1,267 @@
+---
+title: "Chi Square Test Independence 1"
+author: "Matthew Bardoe & Carey Kopeikin"
+date: "3/29/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+## Chi Square Test for Independence
+
+What you will learn in this lesson:
+
+* Two way tables/contingency table
+* What does it mean to be independent
+* How to calculate what independent variables would look like.
+* Learn about ```table```, ```addmargin```, ```chisq.test```
+* Access the observed, expected, and residuals of a chi square test for independence
+* interpret the p-value of a chi square test for independence
+* interpret the residuals of a chi square test for independence
+
+
+## Contingency tables
+
+The main way to explore the relationship between two categorical variables is to look at the "contingency table". A contingency table shows the breakdown of all the data in all the various combinations of answers to the two categorical questions. Let's look at the contingency table from the survey by breaking down by DayBoarding and Race. 
+
+To investigate the way that various categorical data might or might not be related to each other we are going to look at a Pace of Life Survey of Choate students from 2013. This was a survey of 249 randomly chosen students that were enrolled at Choate in 2013. Some of the Variables in this data set are:
+
+
+```{r}
+pol <- read.csv("POL2013rev3.csv")
+head(pol)
+
+table.dayboarding.race <- table(pol$DayBoarding, pol$Race)
+table.dayboarding.race
+
+```
+
+
+This chart is difficult to read due to the long name of the category "Black or African American" so we can change the name of the level to make it easier to read. Note that this method allows us to change the names but not the order of the categories.
+
+```{r}
+pol$Race <- as.factor(pol$Race)
+levels(pol$Race) <- c("Asian", "Black", "Other", "White")
+
+table.dayboarding.race <- table(pol$DayBoarding, pol$Race)
+table.dayboarding.race
+
+```
+
+
+*Question: From this table do you think that there is a difference between the racial background and the quality of being a boarding or day student?*
+
+
+
+In statistics when two qualities don't have a clear relationship we call them *independent*. When they do have a connection we call them *associated*. In terms of probabilities (or proportions), when knowing one thing would change your assessment of the various probabilities of the other it means the two things are associated. For instance, if I know that it is cloudy out then that changes my expectation that is going to rain. So cloudiness and whether it will rain or not are associated. On the other hand, there doesn't seem to be a connection between whether I have oatmeal for breakfast and whether it rains. What I eat for breakfast is independent of whether it rains. 
+
+*Question: Do you think that Race and DayBoarding are independent or associated?*
+
+
+*Question: Try to determine how the number White Day students there would be if the variables were independent?*
+
+
+It is possible to determine the number we would expect to be in each cell if we calculate what are called the marginals of our contingency table.
+
+```{r}
+table.dayboarding.race.margins <- addmargins(table.dayboarding.race)
+table.dayboarding.race.margins
+```
+
+
+The marginals are merely the sum of each row and column. 
+
+If the variables Race and DayBoarding are independent we would expect about the same percentage of each race to be day students. The percentage of total day students is 63/243
+
+```{r}
+day.student.proportion <- 63/243
+day.student.proportion
+```
+
+which is about 26%. Thus we would expect each race to have about 75% of its members be day students. Since there are 135 White students we would expect about 25% of the 135 to be White.
+
+```{r}
+expected.white.day.students <- day.student.proportion*130
+expected.white.day.students
+```
+
+Our expected number of White day students is 33.703. The actual amount of White day students in our sample was 44. Is this a big enough difference for us to think that the variables Race and DayBoarding are not independent or is this just sampling variability? 
+
+We could use the same methods to calculate all of the expected values but we will see a faster method for how to get $R$ to calculate all the expected values for us later. 
+
+
+## Chi-Square
+
+Now we find ourselves in a similar situation to chi-square goodness of fit. It is possible to have a table of numbers and table of expected values that come from the assumption that the variables are independent. In the goodness of fit example we had our observed values and then a distribution that we were expecting. There was not any connection between necessarily between our observation and what we expected. In this case the expectations come from the marginals that are generated from our observation. 
+
+All this means that from a single table we can derive both our observations and expectations. So this chi square test is only going to need a single a table. 
+
+We can now perform a *Chi Square test for independence*. In this case the null hypothesis is that the variables are independent (it was that assumption that allowed us to find our expected values). The alternative hypothesis is that the variables are associated.
+
+This is how you run that test in $R$.
+
+```{r}
+#Note that I am using the original table.dayboarding.race, the one without the margins!
+
+chisq.results <- chisq.test(table.dayboarding.race)
+chisq.results
+```
+
+We can see some important information held inside of ```results```.
+
+We can see the data that this test is based on. This should be identical to the input table.dayboarding.race. 
+
+```{r}
+chisq.results$observed
+```
+
+We can see the expected values. Notice that the expected value for white day students is exactly what we calculated above.
+
+```{r}
+chisq.results$expected
+```
+
+We can see from this that the Other category for race is somewhat what we would expect if the variables were independent.
+
+We can also see which of these items contributed the most to the chi square statistics. $R$ reports the signed square root of the number that goes into the chi-square statistic, but that is good in that it gives a sense of whether something was bigger or smaller than what was expected, and the units are scaled correctly.
+
+The bigger the absolute value the further the sample is from what we would expect. Positive numbers tell us that the sample had more than we would expect and negative numbers tell us that the sample had less than we would expect.
+
+```{r}
+chisq.results$residuals
+```
+
+This tells us that the biggest difference from independence came from Black or African American Day students being smaller than expected, and the next biggest contributor was the category of White Day students being larger than expected.
+
+Displaying the test results again
+```{r}
+chisq.results
+
+```
+we see that our test shows that the Day/Boarding variable is associated with the Race variable in the Choate population in 2013. The reason we can come to this conclusion is that our p-vale (0.001756) is very small. Much smaller than our .05 cut off.   
+
+
+
+
+## Creating a table for chi square tests 
+
+A study from the University of Texas Southwestern Medical Center examined whether the risk of hepatitis C was related to whether people had tattoos and to where they got their tattoos. Hepatitis C causes about 10,000 deaths each year in the United States, but often lies undetected for years after infection. The data can be summarized as follows
+
+```{r}
+table1 <- matrix( c( 17, 35, 8, 53, 22, 491), ncol = 2, byrow = TRUE)
+colnames(table1) <- c( "Hepatitis C", "No Hepatitis C")
+rownames(table1) <- c( "Tatoo parlor", "Tatoo elsewhere", "None")
+table1 <- as.table(table1)
+table1
+```
+
+
+```{r}
+chi.hep <- chisq.test( table1)
+```
+
+```{r}
+chi.hep$expected
+```
+
+
+```{r}
+table2 <- matrix( c( 17+8, 35+ 53, 22, 491), ncol = 2, byrow = TRUE)
+colnames(table2) <- c( "Hepatitis C", "No Hepatitis C")
+rownames(table2) <- c( "Tatoo", "None")
+table2 <- as.table(table2)
+table2
+```
+
+```{r}
+chi.hep2 <- chisq.test( table2)
+
+```
+
+```{r}
+chi.hep2$expected
+```
+
+```{r}
+chi.hep2
+```
+
+
+```{r}
+chi.hep2$residuals
+```
+
+
+
+
+## Your turn
+
+In the space below do the following.
+
+1. Create a contingency table for the variables ```SportsLevelFall``` and ```PressureGeneral```. 
+2. Add the margins to the table and display the values.
+3. State the null and alternative hypothesis for a chi square test of independence for these two variables.
+4. Run the chi square test.
+5. Find the expected values. 
+6. Determine which categories were the largest contributors to the p-value.
+7. Make a conclusion as to whether the variables ```SportsLevelFall``` and ```PressureGeneral```are independent ated.
+
+
+
+1. Create a contingency table for the variables ```SportsLevelFall``` and ```PressureGeneral```.
+
+```{r}
+table.sports.press <- table(pol$SportsLevelFall, pol$PressureGeneral)
+table.sports.press
+```
+
+2. Add the margins to the table and display the values.
+
+```{r}
+table.sports.press.marg <- addmargins(table.sports.press)
+table.sports.press.marg
+```
+
+3. State the null and alternative hypothesis for a chi square test of independence for these two variables.
+
+*Answer here*
+H0: the variables SportsLevelFall and PressureGeneral are independent
+Ha: the variables SportsLevelFall and PressureGeneral are associated 
+
+
+4. Run the chi square test.
+
+```{r}
+chi.sports.press <- chisq.test(table.sports.press)
+chi.sports.press
+```
+
+5. Find the expected values. 
+
+```{r}
+
+
+```
+
+6. Determine which categories were the largest contributors to the p-value.
+
+```{r}
+
+```
+
+*Answer here*
+
+
+
+7. Make a conclusion as to whether the variables ```SportsLevelFall``` and ```PressureGeneral```are independent or associated.
+
+*Answer here*
+
+
+
+
+
+
+

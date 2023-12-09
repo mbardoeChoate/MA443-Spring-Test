@@ -1,0 +1,253 @@
+---
+title: "Loops and Simulations"
+author: "Carey Kopeikin"
+date: "1/22/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+# What you will learn
+
+-   How to use loops to create functions
+-   How to run simulations to find answers to difficult problems. 
+
+####Loops
+In order to demonstrate how loops work we will again use a function that we already know and understand, and create our own version from scratch. The sum function in R adds up all of the values in a vector and displays the result. 
+
+There are several types of loops that can be used in programming. In this class we will use a repeat loop. Repeat loops do the same task over and over until a condition is met that causes them to break the loop.
+
+
+### Example the Sum function
+Below is the code for a function that does the same thing as ```sum```.
+```{r}
+new.sum1 <- function( vector){
+  
+  #Create variables i and partial.sum
+  i = 1
+  partial.sum <- 0
+ 
+  #repeat loop
+  repeat {
+    partial.sum <- partial.sum + vector[i]
+    
+    i <- i + 1
+    
+    if(i > length(vector) ){
+      break
+      }
+  
+  }
+  
+  #display result
+  return(partial.sum)
+}
+```
+
+```{r}
+new.sum1(loans$annual_income )
+```
+
+See that it gives the exact same answer as the built-in sum function in R:
+```{r}
+sum(loans$annual_income)
+```
+
+
+
+### Simulations 
+Simulations are ways of trying to answer complicated problems by having a computer play out senarios many times and analyzing the results.
+
+### Example 1 Finite End to Loop
+
+A person with type O-positive blood can receive blood only from other type O donors. About 44% of the U.S. population has type O blood. At a blood drive:
+a) How many potential donors do you expect to examine in order to get three units of type O blood? Find the answer using a simulation.
+
+b)  If there are only 10 donors what is the likelihood that you will meet your goal of getting 3 units of type O blood?
+
+First create a function that simulates one trial.
+
+```{r}
+how.many.type.o <- function(number.needed){
+  
+  #Create variables and assign them values 
+  num.type.o <- 0
+  number.of.donors <- 0
+  repeat{
+    
+    number.of.donors <- number.of.donors + 1
+    type.of.blood <- sample( 1:100, 1)
+    if( type.of.blood <= 44){ num.type.o <- num.type.o + 1}
+    
+    if( num.type.o == number.needed){ break}
+  }
+  
+  return(number.of.donors)
+} 
+```
+
+```{r}
+how.many.type.o(3)
+```
+
+
+Then replicate that trial many times.
+```{r}
+ten.thousand.trials.type.o <- replicate( 10000, how.many.type.o(3) )
+```
+
+Make graphs and find the summary statistics of the simulations.
+```{r}
+hist(ten.thousand.trials.type.o)
+boxplot(ten.thousand.trials.type.o)
+summary(ten.thousand.trials.type.o)
+```
+
+
+
+```{r}
+sum(ten.thousand.trials.type.o <= 10)
+```
+
+
+Answer via Probability
+```{r}
+3*1/.44
+```
+
+
+
+
+### Example 2 Conditional End to Loop
+
+Why is the NCAA Tournament so much more exciting than the NBA Playoffs?
+
+The NBA Playoffs ends when a team wins 4 games. Suppose that sports analysts consider one team a bit stronger, with a 60% chance to win any individual game. How likely is it that the underdog wins and how many games is the series likely to last? 
+
+Write a function that takes inputs of the amount of games needed to win a series and the likelihood that the favorite wins any individual game and then simulates if the underdog won the series and how many games the series lasted. Then test it on the situation above.
+
+
+```{r}
+
+did.underdog.win <- function( games.needed, percent.chance){
+  
+  numb.game <- 0
+  numb.wins <- 0
+  numb.loses <- 0
+  
+  repeat{
+    
+    numb.game <- numb.game + 1
+    
+    game.result <- sample( 1:100 , 1)
+    if(game.result > percent.chance){ numb.wins <- numb.wins +1}else{
+      numb.loses <- numb.loses + 1
+    }
+
+    
+    if( numb.wins == games.needed){break}
+    if( numb.loses == games.needed){break}
+
+  }
+  
+  winner <- "No"
+  if(numb.wins == games.needed){ winner <- "Yes"}
+
+  return( c(winner, numb.game) )
+  
+}
+```
+
+
+```{r}
+thousand.trials.underdog <- replicate( 1000, did.underdog.win( 4, 60) )
+table(thousand.trials.underdog)
+```
+
+
+
+
+#### Your Turn
+
+1. Many couples want to have both a boy and a girl. If they decide to continue to have children until they have one child of each sex, what would the average number of children be? Assume that boys and girls are equally likely.
+
+
+```{r}
+family.size <- function( boy.min, girl.min ){
+  
+  boys.had <- 0
+  girls.had <- 0
+  
+  repeat{
+    
+    gender.of.baby <- sample( 1:2, 1)
+    if( gender.of.baby == 1){ boys.had <- boys.had +1}
+    if( gender.of.baby == 2){ girls.had <- girls.had +1}
+    
+    if( boys.had >= boy.min & girls.had >= girl.min ){break}
+  }
+  return( boys.had + girls.had)
+}
+```
+
+```{r}
+family.size( 1, 1)
+```
+
+```{r}
+thousand.trials.family.size <- replicate( 1000, family.size(1,1) )
+```
+
+```{r}
+summary( thousand.trials.family.size)
+boxplot(thousand.trials.family.size)
+hist(thousand.trials.family.size)
+```
+
+
+
+
+3. A basketball coach decides to change the way he distributes numbers. When it is your turn to pick your number you must reach into a box and randomly pull out a jersey. If you do not like that number you may do a full court sprint and then reach into the box again and pull out another jersey. The jerseys that you have already rejected are not put back into the box until it is the next persons turn to pick. There are ten jerseys left in the box when it is your turn numbers 2 through 11. How many sprints do you think you will have to do to get number 8?  Run at least 6 trials and explain.
+
+Steps:
+
+step 0: prework/defining variables
+
+loop starts
+1: reach into box grab jersey
+2: look at number and see if the number is 1
+3: if it is 1 then you are done
+4: otherwise put it to the side and do a sprint
+5: repeat from step 1
+loop stops
+
+6: Report the number of sprints
+
+
+```{r}
+sprints.to.get.number <- function(){
+  
+  number.of.sprints <- 0
+  total.jerseys.left <- 10
+  
+  repeat{
+    
+    picked.jersey <- sample(1:total.jerseys.left,1)
+    if( picked.jersey == 1){ break} else{
+      number.of.sprints <- number.of.sprints + 1 }
+    total.jerseys.left <- total.jerseys.left - 1
+  
+  }
+  
+  return(number.of.sprints)
+  
+}
+```
+
+```{r}
+ten.thousand.sprints.function <- replicate( 10000,sprints.to.get.number() ) 
+summary(ten.thousand.sprints.function)
+hist(ten.thousand.sprints.function)
+```

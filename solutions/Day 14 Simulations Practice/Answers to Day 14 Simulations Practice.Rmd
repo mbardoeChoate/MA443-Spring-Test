@@ -1,0 +1,244 @@
+---
+title: "Loops and Simulations"
+author: "Carey Kopeikin"
+date: "1/22/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+
+![Trouble](trouble_board.jpg)
+*1. Trouble*
+You are playing a game of Trouble and need only a roll of 1 to win the game but your opponents are hard at work trying to stop you. 
+
+a) Create a function with a loop that takes no arguments and returns how many turns it took you to win. 
+
+```{r}
+trouble.1 <- function(  ){
+  
+  my.turns <- 1
+  
+  repeat{
+    
+    roll <- sample(1:6, 1)
+    if( roll == 1){break}
+    my.turns <- my.turns + 1
+    
+  }
+  return( my.turns )
+
+}
+```
+
+
+```{r}
+thousand.trouble.1 <- replicate(1000, trouble.1() )
+summary( thousand.trouble.1)
+```
+
+b) Run that function 1000 times
+
+c) Out of that 1000 trials find the average number of turns it took to win.  
+
+d) Make a nice histogram to display the data
+
+
+
+*2. More trouble*
+
+a) Create a function to simulate this situation that takes as an argument how many turns you think it will take for your opponents to land on your piece and send you back to the start. The output of the function should tell you whether you won or lost.
+
+b) Run that function 1000 times.
+
+c) Make a table of those thousand times to show how often you won.
+
+```{r}
+trouble.2 <- function( opponents.turns.to.win ){
+  
+  my.turns <- 1
+  
+  repeat{
+    
+    roll <- sample(1:6, 1)
+    if( roll == 1){break}
+    my.turns <- my.turns + 1
+    
+  }
+  
+  if(my.turns < opponents.turns.to.win){ return("win")}else{
+    return("lose")
+  }
+
+}
+```
+
+```{r}
+thousand.times <- replicate( 1000, trouble.2( 16) )
+table(thousand.times)
+```
+
+
+```{r}
+trouble.2 <- function( opponents.turns.to.win ){
+  
+  my.turns <- 1
+  opp.turns.so.far <- 0
+  
+  repeat{
+    
+    roll <- sample(1:6, 1)
+    if( roll == 1){break}
+    
+    opp.turns.so.far <- opp.turns.so.far +1
+    if( opp.turns.so.far >= opponents.turns.to.win){break}
+    
+    my.turns <- my.turns + 1
+    
+  }
+  
+  if(roll == 1){ return("win")}else{
+    return("lose")
+  }
+
+}
+```
+
+
+*3. Multiple Choice Quiz*
+
+a) A friend of yours took a multiple choice quiz that had a certain amount of questions with four possible answers each. She got all of the questions right, but claims to have guessed blindly on every question. Write a function that takes as an input the number of questions on the quiz, and simulates the number of answers that would be correct given this random method of taking the quiz. *This function should not use loops*
+
+
+```{r}
+
+mc.test <- function( number.questions ){
+  
+  
+  answers.to.questions <- sample( 1:4, number.questions, replace = TRUE)
+  number.correct <- sum( answers.to.questions == 1 )
+
+  return(number.correct)
+}
+
+
+```
+
+
+
+```{r}
+mc.test <- function( number.questions ){
+  
+  answers.to.questions <- sample( 1:100, number.questions, replace = TRUE)
+  number.correct <- sum( answers.to.questions <= 25 )
+
+  return(number.correct)
+}
+```
+
+
+
+```{r}
+thousand <- replicate(1000, mc.test(3) )
+table(thousand)
+
+```
+
+
+
+
+
+
+
+b) If the quiz had 3 questions, would you believe your friend had guessed blindly and got all of the questions correct? Explain, basing your argument on a simulation involving at least 1000 trials.
+
+
+*4. Multiple Choice Quiz Part 2*
+
+a) Do the multiple choice question above but this time use a simulation that contains a loop.
+
+```{r}
+mc.test <- function( number.questions ){
+  
+  number.correct <- 0
+  i <- 0 
+  
+  repeat{
+    i <- i+1
+    
+    answer <- sample( 1:100, 1)
+    if( answer <= 25){ number.correct <- number.correct +1}
+    if( i == number.questions){break}
+  }
+  
+  return( number.correct )
+}
+
+```
+
+```{r}
+thousand.mc.loop <- replicate( 1000, mc.test(3))
+table( thousand.mc.loop)
+```
+
+
+
+*5. Bus Late?*
+
+Your friend who doesn't go Choate takes a bus to school every morning. It is late 30% of the time. Create a function that takes as an input the number of days they are taking the bus and simulates the number of days the bus is late. *Answer this problem with a loop*
+
+a) How often is it late three days in a row?
+```{r}
+bus.late <- function( days ){ 
+  
+  days.late <- 0
+  i <- 0
+  
+  repeat{
+    
+    i <- i +1
+    bus.ride <- sample(1:100, 1 )
+    if( bus.ride <= 30){ days.late <- days.late +1}
+    
+    if( i == days){break}
+  }
+  
+  return(days.late)
+  }
+```
+
+```{r}
+thousand.bus <- replicate( 1000, bus.late(3))
+table(thousand.bus)
+```
+
+
+b) How often is it late three days in one week?
+
+```{r}
+thousand.bus <- replicate( 1000, bus.late(7))
+table(thousand.bus)
+sum(thousand.bus >= 3)
+```
+
+
+*6. Late bus part 2*
+
+a) Create a function similar to the one created in 5a but this time don't use a loop.
+
+```{r}
+bus.no.loop <- function( days ){ 
+  
+    bus.rides <- sample(1:100, days, replace = TRUE )
+    days.late <- sum( bus.rides <= 30)
+    return(days.late)
+  }
+```
+
+```{r}
+bus.no.loop( 7)
+```
+
+

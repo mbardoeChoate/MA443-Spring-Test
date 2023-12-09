@@ -1,0 +1,104 @@
+---
+title: "Day 05 Practice Problems"
+author: "Carey Kopeikin"
+date: "3/21/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+
+
+1. A garden center wants to store leftover packets of vegetable seeds for sale the following spring, but the center is concerned that the seeds may not germinate at the same rate a year later. The manager finds a packet of last year’s green bean seeds and plants them as a test. Although the packet claims a germination rate of 92%, only 171 of 200 test seeds sprout. Is this evidence that the seeds have lost viability during a year in storage? Test an appropriate hypothesis and state your conclusion. 
+
+a) Write appropriate hypotheses.
+
+b) What is a type I error in this context? Explain the ramifications of that error.
+
+c) What is a type II error in this context? Explain the ramifications of that error.
+
+d) Which is worse in this context?
+
+e) Based on your answer to part d) is it better to use an alpha level of .1 or .001.
+
+f) Perform the test and find the p-value using the alpha you selected in part e.
+
+g) Make a graph
+
+h) State your conclusion.
+
+i) Do you think this difference is meaningful? Explain.
+
+
+2. Data on a random sample of 100 births for babies in North Carolina can be found in ```births.csv```. Government officials are wondering if their messaging has convinced mothers to smoke less. The goal was to to get under 40% of pregnant women to smoke. Did they succeed?
+
+a) Write appropriate hypotheses.
+
+b) What is a type I error in this context? Explain the ramifications of that error.
+
+c) What is a type II error in this context? Explain the ramifications of that error.
+
+d) Which is worse in this context?
+
+e) Based on your answer to part d) is it better to use an alpha level of .1 or .01.
+
+f) Perform the test and find the p-value using the alpha you selected in part e.
+
+g) Make a graph
+
+h) State your conclusion.
+
+
+
+
+3. Census data for a certain county show that 19% of the adult residents are Hispanic. Suppose 72 people are called for jury duty and only 9 of them are Hispanic. Does this apparent underrepresentation of Hispanics call into question the fairness of the jury selection system? 
+
+a) Write appropriate hypotheses.
+
+b) What is a type I error in this context? Explain the ramifications of that error.
+
+c) What is a type II error in this context? Explain the ramifications of that error.
+
+d) Which is worse in this context?
+
+e) Based on your answer to part d) is it better to use an alpha level of .1 or .01.
+
+f) Perform the test and find the p-value using the alpha you selected in part e.
+
+g) Make a graph
+
+h) State your conclusion.
+
+
+
+
+4. A simple random sample of US adults in March 2013 were asked if they would vote for or against a law that would reduce US and Russian nuclear arsenals. The results are in the file ```nuclear_survey.csv``` Prior to the poll it was believed that 60% of Americans were for disarmament. Have things changed?
+
+a) Write appropriate hypotheses.
+
+b) What is a type I error in this context? Explain the ramifications of that error.
+
+c) What is a type II error in this context? Explain the ramifications of that error.
+
+d) Which is worse in this context?
+
+e) Based on your answer to part d) is it better to use an alpha level of .05 or .01.
+
+f) Perform the test and find the p-value using the alpha you selected in part e.
+
+g) Make a graph
+
+h) State your conclusion.
+
+
+
+
+
+
+
+
+
+
+

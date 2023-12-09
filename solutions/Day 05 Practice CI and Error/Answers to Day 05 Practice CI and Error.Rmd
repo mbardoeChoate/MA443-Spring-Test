@@ -1,0 +1,396 @@
+---
+title: "Day 05 Practice Problems"
+author: "Carey Kopeikin"
+date: "3/21/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+ 
+
+1. A garden center wants to store leftover packets of vegetable seeds for sale the following spring, but the center is concerned that the seeds may not germinate at the same rate a year later. The manager finds a packet of last year’s green bean seeds and plants them as a test. Although the packet claims a germination rate of 92%, only 171 of 200 test seeds sprout. Is this evidence that the seeds have lost viability during a year in storage? Test an appropriate hypothesis and state your conclusion. Be sure the appropriate assumptions and conditions are satisfied before you proceed.
+
+
+a) Write appropriate hypotheses.
+$$H_0: p = .92 \\ H_a: p <.92$$
+
+b) What is a type I error in this context? Explain the ramifications of that error.
+Type I error is when the true proportion really is .92 but we think that it is less than .92. This would mean that we think the seeds have lost viability but they are really just as good as before.
+
+c) What is a type II error in this context? Explain the ramifications of that error.
+Type II error is when the true proportion is less than .92 but we think that it is .92. This would result in us thinking that our seeds were fine but really they weren't as good.
+
+d) Which is worse in this context?
+Up to you
+
+e) Based on your answer to part d) is it better to use an alpha level of .1 or .001.
+If you said Type I then .001
+If you said Type II then .1
+
+f) Perform the test and find the p-value using the alpha you selected in part e.
+
+Define variables
+```{r}
+# number of successes
+x <- 171
+
+# sample size
+n <- 200
+
+# sample proportion of successes
+phat <- x/n 
+
+# sample proportion of failures
+qhat <- 1-phat
+
+# assumed true proportion of successes
+p = .92
+
+#assumed true proportion of failures
+q = 1-p
+
+#Standard deviation of the sampling distribution of sample proportions
+SDphat <- sqrt( (p*q)/n )
+```
+
+
+```{r}
+prop.test( x, n, p, alternative = "less", correct=FALSE)
+```
+
+
+
+g) Make a graph
+```{r}
+
+curve( dnorm( x, p, SDphat),
+       xlim=c(p-4*SDphat, p+4*SDphat),
+       lwd = 3, 
+       main="Sampling Distribution of The \n Sampling Proportion of Seeds that Sprouted",
+       xlab="Proportion of Seeds that Sprouted",
+       ylab="Density",
+       col = "purple",
+       )
+
+
+segments(phat, 0, phat, dnorm( phat, p, SDphat),
+         col="red",
+         lwd=5)
+
+polygon(x=c(0, 
+            seq(from=-1, to=phat, by=.0001),
+            phat),
+        y=c(0,
+            dnorm(seq(from=-1, to=phat, by=.0001),mean=p, sd=SDphat),
+            0),
+        col="yellow")
+
+```
+
+h) State your conclusion.
+
+Our p-value of 0.0003516 is less than the alpha value of (whatever was chosen in part e) so we reject the null hypothesis that p = .92 and accept the alternative hypothesis that p < .92.  
+
+
+
+2. Data on a random sample of 100 births for babies in North Carolina can be found in ```births.csv```. Government officials are wondering if their messaging has convinced mothers to smoke less. The goal was to to get under 40% of pregnant women to smoke. Did they succeed?
+
+a) Write appropriate hypotheses.
+
+$$H_0: p = .4 \\ H_a: p <.4$$
+
+b) What is a type I error in this context? Explain the ramifications of that error.
+Type I error is when the true proportion really is .4 but we think that it is less than .4. This would mean that we think the we have reduced smoking but really our messaging hasn't worked.
+
+c) What is a type II error in this context? Explain the ramifications of that error.
+Type II error is when the true proportion is less than .4 but we think that it is still .4. This would result in us thinking that our efforts were not working but really they are reducing smoking.
+
+d) Which is worse in this context?
+Up to you
+
+e) Based on your answer to part d) is it better to use an alpha level of .1 or .001.
+If you said Type I then .01
+If you said Type II then .1
+
+
+f) Perform the test and find the p-value using the alpha you selected in part e.
+Define variables
+```{r}
+births <- read.csv("births.csv")
+head(births)
+# number of successes
+x <- sum(births$smoke == "smoker")
+
+# sample size
+n <- length(births$smoke)
+
+# sample proportion of successes
+phat <- x/n 
+
+# sample proportion of failures
+qhat <- 1-phat
+
+# assumed true proportion of successes
+p = .4
+
+#assumed true proportion of failures
+q = 1-p
+
+#Standard deviation of the sampling distribution of sample proportions
+SDphat <- sqrt( (p*q)/n )
+```
+
+
+```{r}
+prop.test( x, n, p, alternative = "less", correct=FALSE)
+```
+
+g) Make a graph
+
+```{r}
+
+curve( dnorm( x, p, SDphat),
+       xlim=c(p-4*SDphat, p+4*SDphat),
+       lwd = 3, 
+       main="Sampling Distribution of The \n Sampling Proportion of Smokers",
+       xlab="Proportion of Smokers",
+       ylab="Density",
+       col = "purple",
+       )
+
+
+segments(phat, 0, phat, dnorm( phat, p, SDphat),
+         col="red",
+         lwd=5)
+
+polygon(x=c(0, 
+            seq(from=-1, to=phat, by=.0001),
+            phat),
+        y=c(0,
+            dnorm(seq(from=-1, to=phat, by=.0001),mean=p, sd=SDphat),
+            0),
+        col="yellow")
+
+```
+h) State your conclusion.
+Your answer to this will depend on your answer to part e:
+If you chose .01 in e than: 
+Our p-value of 0.04779 is greater than the alpha value of .01 so we fail to reject the null hypothesis that p = .4 and can not say that p < .4.
+
+
+If you chose .1 in e than: 
+Our p-value of 0.04779 is less than the alpha value of .1 so we reject the null hypothesis that p = .4 and accept the alternative hypothesis that p < .4.
+
+
+
+
+
+3. Census data for a certain county show that 19% of the adult residents are Hispanic. Suppose 72 people are called for jury duty and only 9 of them are Hispanic. Does this apparent underrepresentation of Hispanics call into question the fairness of the jury selection system? 
+a) Write appropriate hypotheses.
+
+$$H_0: p = .19 \\ H_a: p <.19$$
+
+b) What is a type I error in this context? Explain the ramifications of that error.
+Type I error is when the true proportion really is .19 but we think that it is less than .19. This would mean that we  true percentage of Hispanic people called for jury duty is representative of the population but we think that it isn't.
+
+c) What is a type II error in this context? Explain the ramifications of that error.
+Type II error is when the true proportion is less than .19 but we think that it is .19. This would result in us thinking the true percentage of Hispanic people called for jury duty is representative of the population but it actually is not representative. 
+
+d) Which is worse in this context?
+Up to you
+
+e) Based on your answer to part d) is it better to use an alpha level of .1 or .01.
+If you said Type I then .01
+If you said Type II then .1
+
+
+f) Perform the test and find the p-value using the alpha you selected in part e.
+Define variables
+```{r}
+
+# number of successes
+x <- 9
+# sample size
+n <- 72
+
+# sample proportion of successes
+phat <- x/n 
+
+# sample proportion of failures
+qhat <- 1-phat
+
+# assumed true proportion of successes
+p = .19
+
+#assumed true proportion of failures
+q = 1-p
+
+#Standard deviation of the sampling distribution of sample proportions
+SDphat <- sqrt( (p*q)/n )
+```
+
+
+```{r}
+prop.test( x, n, p, alternative = "less", correct=FALSE)
+```
+
+g) Make a graph
+
+```{r}
+
+curve( dnorm( x, p, SDphat),
+       xlim=c(p-4*SDphat, p+4*SDphat),
+       lwd = 3, 
+       main="Sampling Distribution of The \n Sampling Proportion of Hispanic Jurors",
+       xlab="Proportion of Hispanic Jurors",
+       ylab="Density",
+       col = "purple",
+       )
+
+
+segments(phat, 0, phat, dnorm( phat, p, SDphat),
+         col="red",
+         lwd=5)
+
+polygon(x=c(0, 
+            seq(from=-1, to=phat, by=.0001),
+            phat),
+        y=c(0,
+            dnorm(seq(from=-1, to=phat, by=.0001),mean=p, sd=SDphat),
+            0),
+        col="yellow")
+
+```
+h) State your conclusion.
+Your answer to this will depend on your answer to part e:
+If you chose .01 in e than: 
+Our p-value of 0.07987 is greater than the alpha value of .01 so we fail to reject the null hypothesis that p = .19 and can not say that p < .19.
+
+
+If you chose .1 in e than: 
+Our p-value of 0.07987 is less than the alpha value of .1 so we reject the null hypothesis that p = .19 and accept the alternative hypothesis that p < .19.
+
+
+
+
+
+
+
+
+4. A simple random sample of US adults in March 2013 were asked if they would vote for or against a law that would reduce US and Russian nuclear arsenals. The results are in the file ```nuclear_survey.csv``` Prior to the poll it was believed that 60% of Americans were for disarmament. Have things changed?
+
+a) Write appropriate hypotheses.
+
+$$H_0: p = .6 \\ H_a: p \ne .6$$
+
+b) What is a type I error in this context? Explain the ramifications of that error.
+Type I error is when the true proportion really is .6 but we think that it is not equal to .6. This would mean that we think the views on disarmament have changed but in reality they have not changed.
+
+c) What is a type II error in this context? Explain the ramifications of that error.
+Type II error is when the true proportion is not equal to .6 but we think that it is still .6. This would mean that we think the views on disarmament have not changed but even though they have.
+
+d) Which is worse in this context?
+Up to you
+
+e) Based on your answer to part d) is it better to use an alpha level of .05 or .01.
+If you said Type I then .05
+If you said Type II then .01
+
+
+f) Perform the test and find the p-value using the alpha you selected in part e.
+Define variables
+```{r}
+nuke.data <- read.csv("nuclear_survey.csv")
+head(nuke.data)
+# number of successes
+x <- sum(nuke.data$arms_reduction == "favor")
+
+# sample size
+n <- length(nuke.data$arms_reduction)
+
+# sample proportion of successes
+phat <- x/n 
+
+# sample proportion of failures
+qhat <- 1-phat
+
+# assumed true proportion of successes
+p = .6
+
+#assumed true proportion of failures
+q = 1-p
+
+#Standard deviation of the sampling distribution of sample proportions
+SDphat <- sqrt( (p*q)/n )
+```
+
+
+```{r}
+prop.test( x, n, p, alternative = "two.sided", correct=FALSE)
+```
+
+g) Make a graph
+
+```{r}
+
+curve( dnorm( x, p, SDphat),
+       xlim=c(p-4*SDphat, p+4*SDphat),
+       lwd = 3, 
+       main="Sampling Distribution of The \n Sampling Proportion of People in Favor of Disarmament",
+       xlab="Proportion of People in Favor of Disarmament",
+       ylab="Density",
+       col = "purple",
+       )
+
+if (phat < p){ 
+  tail.1 <- phat
+  tail.2 <- -1*(phat-p) + p
+} else{
+    tail.2 <- phat
+    tail.1 <- -1*(phat-p) + p 
+}
+
+
+segments(tail.1, 0, tail.1, dnorm( tail.1, p, SDphat),
+         col="red",
+         lwd=5)
+
+polygon(x=c(0, 
+            seq(from=-1, to=tail.1, by=.0001),
+            tail.1),
+        y=c(0,
+            dnorm(seq(from=-1, to=tail.1, by=.0001),mean=p, sd=SDphat),
+            0),
+        col="yellow")
+
+
+
+segments(tail.2, 0, tail.2, dnorm( tail.2, p, SDphat),
+         col="red",
+         lwd=5)
+
+polygon(x=c(tail.2, 
+            seq(from=tail.2, to=1, by=.0001),
+            1),
+        y=c(0,
+            dnorm(seq(from=tail.2, to=1, by=.0001),mean=p, sd=SDphat),
+            0),
+        col="yellow")
+
+```
+h) State your conclusion.
+
+Our p-value of 0.00939 is less than either alpha value you selected in part e so we reject the null hypothesis that p = .6 and accept the alternative hypothesis that p is not equal to .6. 
+
+
+
+
+
+
+
+
+
+
+

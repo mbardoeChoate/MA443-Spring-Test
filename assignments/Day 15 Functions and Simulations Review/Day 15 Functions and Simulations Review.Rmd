@@ -1,0 +1,60 @@
+---
+title: "Day 15 Functions and Simulations Review"
+author: "Carey Kopeikin"
+date: "1/22/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+
+1. *Playoff Meltdown*
+a) Certain players are unfairly accused of "choking" in the playoffs. A player may just be unlucky during a critical game. Consider Ben Simmons, who did very poorly in the 2020-2021 NBA playoffs. In order to see if his shooting was an aberration create a function that takes two arguments, the number of free throws taken by the player in the playoffs and the player's regular season free throw percentage. The function should then simulate the number of free throws taken assuming the regular season free throw percentage is valid. The function should return the number of made free throws. Do this without using a loop.
+
+
+
+b) Ben Simmons regular season free throw percentage is 61%. In the 2020-2021 NBA playoffs he took 73 shots. Use your function to simulate how many shots he should have made. Simulate at least 1000 times. 
+
+
+c) In the 2020-2021 NBA playoffs Ben Simmons made only 25 shots. Was he just unlucky or was something else going on?
+
+
+
+
+
+2. *Playoff Meltdown with Loop*
+
+Answer question 1 with a loop.
+
+
+
+
+
+
+3. *Positivity*
+Write a function that takes as an argument a number and returns whether the number is positive, negative, or neither.
+
+
+
+
+4. *Double the fun*
+How many rolls does it take until you roll doubles? 
+
+a. Create a function that takes no arguments, rolls two 6 sided dice and returns the number of rolls it takes until you get doubles.
+
+b. find the average amount using at least 1000 simulations.
+
+
+
+5. *Airport Security*
+The Transportation Security Administration (TSA) is responsible for airport safety. On some flights, TSA officers randomly select passengers for an extra security check prior to boarding. One such flight had 76 passengers – 12 in first class and 64 in coach class. Some passengers were surprised when none of the 10 passengers chosen for screening were seated in the first class. We can use a simulation to see if this result is likely to happen by chance. This can be done both with a loop and without but is easier without.
+
+a. write a function that takes 3 arguments,how many people are in first class, how many are in coach, and how many are chosen for screening. The function should return how many screened are from first class.
+
+
+b. Run the function 1000 times using the numbers above.
+
+
+c. Should the passengers be surprized at the results?

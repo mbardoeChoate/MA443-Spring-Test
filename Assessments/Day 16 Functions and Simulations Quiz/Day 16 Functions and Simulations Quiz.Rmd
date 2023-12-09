@@ -1,0 +1,106 @@
+---
+title: "Day 16 Functions and Simulations Quiz"
+author: "Carey Kopeikin"
+date: "1/22/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+### **Honor Code:** 
+
+This quiz is open note, open book, open internet. You may not seek help from or give help to anyone. You may ask questions of me but if I answer them I am likely to take off points. I will tell you that I will take off points before I answer the question and give you the option of losing the points or trying to figure out the question on your own.  
+
+
+Type your name below indicating you are signing the honor code.
+
+On my honor I have given nor received unauthorized aid.
+*(type name here to sign)*
+
+
+*Instructions*
+You must do a total of 2 problems. One problem must be from the non-loop section (1 and 2) and one must be from the loop section (3 and 4). Problems 5 and 6 are extra credit and you must do your two main problems first. They are much more difficult than 1-4. I will only grade one problem in the loop section and one in the non-loop section. You can attempt the other problems but you must indicate below which 2 you want me to grade.
+
+
+*Which problems do you want me to grade?*
+
+
+
+## Non-loop section
+Pick either problem 1 or 2 and answer it with a function that does not contain a loop.
+
+
+1. *Called Out*
+
+
+a. Your History teacher cold calls on students during class. She claims that she randomly calls on the students will each student being equally likely to get called on. There are ten students in your class. Create a function that takes as an argument the number of questions that the teacher asked on a given day. The function should then simulate how many questions you were asked.
+
+
+
+
+b. On Monday you made fun of the teacher before class and were then called on 4 times. Run the function created above 1000 times assuming that the teacher asked 12 questions on Monday.
+```{r}
+set.seed(1)
+```
+
+
+
+
+c. Do you have an argument that you were unfairly picked on? 
+
+
+
+
+
+
+2. *Which is Bigger?*
+Create a function that takes two arguments both of which are numbers. The function should then determine which number is larger and return a number that is twice as big as the larger number. 
+
+
+
+
+
+
+##Loop section
+Pick either problem 3 or 4 and answer it with a function that does contain a loop.
+
+3. *Solitaire*
+a. My father's favorite way to waste time is to play solitaire on the computer and he wins 80% of his games. Before going to bed he needs to win a certain number of games. Create a function that takes as an argument the number of wins he needs to get. The function should then tell you how many games he needed to play in order to get that many wins. 
+
+
+b. On average how many games does he have to play in order to win 5 games. Run the function a thousand times and report the average games he must play to win 5 games.
+```{r}
+set.seed(1)
+```
+
+
+
+4. *Covid*
+a. According to the Washington Post 60% of Americans have had Covid at least once. Create a function that takes as an argument the number of students in a class and simulates how many of those students have had Covid. 
+
+
+b. How surprised would you be if you were in a class of 8 people and they all claimed to have had Covid. Run the function at least 1000 times to answer this question. 
+```{r}
+set.seed(1)
+```
+
+
+
+
+##Extra Credit
+If you finish early try these problems. Note that they are more difficult than 1-4.
+
+5. In a jar in the math office at Choate there is a collection of 30 amazing collectible pencils, 8 of which are sports-themed. If Mr. Kopeikin pulls out a handful of 6 pencils to admire them, how many sports-themed pencils on average would be in his handful? Your simulation should use at least 1000 trials. Your answer should be supported by a table, a summary, and a histogram.
+```{r}
+set.seed(1)
+```
+
+
+
+6. As a 4-H project, Billy is raising chickens. He feeds and waters them every day, and collects the eggs every other day, selling them to people in the neighborhood. He has found that each hen's nest will contain from 0 to 2 eggs. Based on past experience he estimates that there will be no eggs in 10% of the nests, one egg in 30% of the nests, and 2 eggs in the other 60%. Conduct a simulation of at least 1000 trials to estimate how many nests Billy will have to visit to collect a dozen eggs.
+```{r}
+set.seed(1)
+```
+

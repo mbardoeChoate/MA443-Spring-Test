@@ -1,0 +1,137 @@
+---
+title: "Untitled"
+author: "Carey Kopeikin"
+date: "4/3/2022"
+output: pdf_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+1. A study in 1994 examined dogs to determine whether there is an increased risk of cancer in dogs that are exposed to the herbicide 2,4-Dichlorophenoxyacetic acid (2,4-D). The results of the dogs who were exposed are in ```cancer_in_dogs1.csv```. In general 32% of dogs who are not exposed to the herbicide develop cancer. 
+
+a) Write appropriate hypotheses.
+
+$$H_0: p = .32 \\ H_a: p >.32$$
+
+b) What is a type I error in this context? Explain the ramifications of that error.
+A type I error is if the true p = .32 but we think it is greater than .32. This would mean that we think the herbicide causes cancer even though it doesn't. 
+
+
+c) What is a type II error in this context? Explain the ramifications of that error.
+A type II error is if the true p > .32 but we think that it is = .32. This would mean that we think the herbicide does not cause cancer even though it does.
+
+d) Which is worse in this context?
+Up to you
+
+e) Based on your answer to part d) is it better to use an alpha level of .05 or .01.
+If you said Type I then .01
+If you said Type II then .05
+
+f) Perform the test and find the p-value using the alpha you selected in part e.
+
+```{r}
+dogs.data <- read.csv("cancer_in_dogs1.csv")
+head(dogs.data) 
+# number of successes
+x <- sum(dogs.data$response == "cancer")
+
+# sample size
+n <- length(dogs.data$response)
+
+# sample proportion of successes
+phat <- x/n 
+
+# sample proportion of failures
+qhat <- 1-phat
+
+# assumed true proportion of successes
+p = .32
+
+#assumed true proportion of failures
+q = 1-p
+
+#Standard deviation of the sampling distribution of sample proportions
+SDphat <- sqrt( (p*q)/n )
+```
+
+```{r}
+prop.test(x, n, p, alternative = "greater", correct = FALSE)
+```
+
+g) Make a graph
+
+```{r}
+curve( dnorm( x, p, SDphat),
+       xlim=c(p-4*SDphat, p+4*SDphat),
+       lwd = 3, 
+       main="Sampling Distribution of The \n Sampling Proportion of Dogs with Cancer",
+       xlab="Proportion of Dogs with Cancer",
+       ylab="Density",
+       col = "purple",
+       )
+
+
+segments(phat, 0, phat, dnorm( phat, p, SDphat),
+         col="red",
+         lwd=5)
+
+polygon(x=c(phat, 
+            seq(from=phat, to=1, by=.0001),
+            1),
+        y=c(0,
+            dnorm(seq(from=phat, to=1, by=.0001),mean=p, SDphat),
+            0),
+        col="yellow")
+
+```
+
+h) State your conclusion.
+0.0008415
+
+
+
+2. Californians love there In-N-Out Burgers. It is so popular that your friend from California states that 70% of Californians would say In-N-Out makes the best burgers. You think it is less and Collect a survey of 500 respondents. The file ```burger.csv``` contains the results. We have information on their gender and their favorite burger joint. Set up an appropriate hypothesis test to see who wins the bet? 
+
+a) Write appropriate hypotheses.
+
+b) What is a type I error in this context? Explain the ramifications of that error.
+
+c) What is a type II error in this context? Explain the ramifications of that error.
+
+d) Which is worse in this context?
+
+e) Based on your answer to part d) is it better to use an alpha level of .05 or .01.
+
+f) Perform the test and find the p-value using the alpha you selected in part e.
+```{r}
+burger.data <- read.csv("burger.csv")
+head(dogs.data) 
+# number of successes
+x <- sum(dogs.data$response == "cancer")
+
+# sample size
+n <- length(dogs.data$response)
+
+# sample proportion of successes
+phat <- x/n 
+
+# sample proportion of failures
+qhat <- 1-phat
+
+# assumed true proportion of successes
+p = .32
+
+#assumed true proportion of failures
+q = 1-p
+
+#Standard deviation of the sampling distribution of sample proportions
+SDphat <- sqrt( (p*q)/n )
+```
+g) Make a graph
+
+h) State your conclusion.
+
+```

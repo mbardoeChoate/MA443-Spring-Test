@@ -1,0 +1,119 @@
+---
+title: "Functions"
+author: "Carey Kopeikin "
+date: "4/02/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+
+1. Write a function that takes as an input a temperature in Celsius and outputs that temperature in Fahrenheit. 
+
+```{r}
+Celsius.to.Fahrenheit <- function( temp.in.Celsius ){
+  
+  temp.in.Fahrenheit <- temp.in.Celsius * 9/5 + 32
+  
+  return(temp.in.Fahrenheit)
+  
+}
+```
+
+```{r}
+Celsius.to.Fahrenheit(0)
+Celsius.to.Fahrenheit(100)
+```
+
+
+2. Write a function that takes a vector as an input and randomly selects three elements from that vector.
+
+```{r}
+terrible.team <- read.csv("terrible team.csv")
+```
+
+
+```{r}
+three.elements.fun <- function( my.vector ){
+  
+  elements <- sample( my.vector, 3)
+  
+  return(elements)
+  
+}
+```
+
+```{r}
+three.elements.fun(terrible.team$H)
+```
+
+3. Write a function that takes two numbers as inputs and then randomly picks a number in-between those numbers. If no arguments are entered have the default be 5 and 10.
+
+```{r}
+in.between.fun <- function( number1=5, number2=10 ){
+  
+  my.number <- sample( number1:number2, 1)
+  
+  return(my.number)
+  
+}
+```
+
+```{r}
+in.between.fun(30, 100)
+in.between.fun()
+```
+
+
+4. Write a function that takes as an input a vector and outputs the number of elements in the vector, the largest number in the vector, and the average of the vector.
+
+```{r}
+vector.info <- function( my.vector ){
+  
+  numb.elements <- length( my.vector)
+  largest.num <- max( my.vector)
+  average <- mean(my.vector)
+  
+  return( c( numb.elements, largest.num, average) )
+  
+}
+```
+
+```{r}
+vector.info(terrible.team$H)
+```
+
+
+5. Write a function that allows you to enter an integer and outputs the next 4 integers.
+
+```{r}
+# method 1
+next.four.fun <- function( my.number ){
+  
+  numbers <- (my.number + 1):(my.number + 4)
+  
+  return(numbers)
+  
+}
+
+#method 2
+
+next.four.fun.2 <- function( my.number ){
+  
+  numbers <- c( (my.number + 1), (my.number + 2), (my.number + 3), (my.number + 4) )
+  
+  return(numbers)
+  
+}
+
+#there are many other ways
+
+```
+
+```{r}
+next.four.fun( 8)
+next.four.fun.2(20)
+```
+

@@ -1,0 +1,30 @@
+---
+title: "Functions"
+author: "Carey Kopeikin "
+date: "4/02/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+
+1. Write a function that takes as an input a temperature in Celsius and outputs that temperature in Fahrenheit. 
+
+
+
+2. Write a function that takes a vector as an input and randomly selects three elements from that vector.
+
+
+
+3. Write a function that takes two numbers as inputs and then randomly picks a number in-between those numbers. If no arguments are entered have the default be 5 and 10.
+
+
+
+4. Write a function that takes as an input a vector and outputs the number of elements in the vector, the largest number in the vector, and the average of the vector.
+
+
+
+5. Write a function that allows you to enter an integer and outputs the next 4 integers.
+ 

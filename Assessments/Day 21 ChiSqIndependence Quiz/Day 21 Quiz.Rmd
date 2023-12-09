@@ -1,0 +1,102 @@
+---
+title: "ChiSqQuiz.Rmd"
+author: "Matthew Bardoe & Carey Kopeikin"
+date: "3/19/2020"
+output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+### **Honor Code:** 
+
+This quiz is open note, open book, open internet. You may not seek help from or give help to anyone. You may ask questions of me but if I answer them I am likely to take off points. I will tell you that I will take off points before I answer the question and give you the option of losing the points or trying to figure out the question on your own.  
+
+
+Type your name below indicating you are signing the honor code.
+
+On my honor I have given nor received unauthorized aid.
+*(type name here to sign)*
+
+
+### Instructions
+
+For each question in this quiz you should use a chi square goodness of
+fit test to see if the observed values match the expected values. For
+all tests you should list your hypotheses, run the test, explain your
+results, and check the residuals if applicable. You should use .05 as
+your alpha value for all the tests.
+
+*If you are stuck on any part raise your hand and I may be able to help you at the cost of a few points.*
+
+
+1.  Sample of students and their GPA and IQ
+    <https://www.openintro.org/data/index.php?data=gpa_iq>
+
+A data study was done on students GPA and their IQ. The results are in
+the file `gpa_iq.csv` Some question whether it had an appropriate gender
+balance. Do a chi square goodness of fit test to see if the gender
+balance was representative of the population. You may assume that the
+population in this region has 50% males and 50% females. Note that in the data 1
+represents male and 2 represents female.
+
+a)  list the hypotheses
+
+b)  run the test
+
+c)  explain your results
+
+d)  check the residuals and explain the results (if applicable)
+
+
+2.  NBA Finals
+When two competing teams are equally matched, the probability that
+each team wins any game is 0.5. The NBA championship goes to the
+team that wins four games in a best-of-seven series. If the teams
+were equally matched, the probability that the final series ends
+with one of the teams sweeping four straight games would be 0.125 .
+Further probability calculations indicate that 25% of these series
+should last five games, 31.25% should last six games, and the other
+31.25% should last the full seven games. The table shows the number
+of games it took to decide each of the last 57 NBA champs. Do you
+think the teams are usually equally matched? Give statistical
+evidence to support your conclusion.    
+
+| Length of series | 4 games |  5 games| 6 games | 7 games |
+|------------------|---------|---------|---------|---------|
+|  NBA finals      | 7       | 13      | 22      | 15      |
+
+
+a)  list the hypotheses
+
+b)  run the test
+
+c)  explain your results
+
+d)  check the residuals and explain the results (if applicable)
+
+
+3. Bio Test
+A biology professor reports that historically grades in her introductory biology course have
+been distributed as follows: 15% A’s, 30% B’s, 40% C’s, 10% D’s, and 5% F’s. Grades in her
+most recent course were distributed as follows:
+
+| Grade     | A   | B   | C   | D   | F   |
+|-----------|-----|-----|-----|-----|-----|
+| Frequency | 89  | 121 | 78  | 25  | 12  |
+
+Test an appropriate hypothesis to decide if the professor’s most recent grade distribution
+matches the historical distribution. Give statistical evidence to support your conclusion.
+
+a)  list the hypotheses
+
+b)  run the test
+
+c)  explain your results
+
+d)  check the residuals and explain the results (if applicable)
+

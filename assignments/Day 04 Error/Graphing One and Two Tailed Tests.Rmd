@@ -1,0 +1,150 @@
+---
+title: "Graphing One and Two Tailed Tests"
+author: "Carey Kopeikin"
+date: "2/21/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+ 
+# Tests for proportions
+
+Read in data 
+```{r}
+scan <- read.csv("full_body_scan.csv")
+
+```
+
+Define variables
+```{r}
+# number of successes
+x <- sum(scan$answer == "should not")
+
+# sample size
+n <- length(scan$answer)
+
+# sample proportion of successes
+phat <- x/n 
+
+# sample proportion of failures
+qhat <- 1-phat
+
+# assumed true proportion of successes
+p = .17
+
+#assumed true proportion of failures
+q = 1-p
+
+#Standard deviation of the sampling distribution of sample proportions
+SDphat <- sqrt( (p*q)/n )
+```
+
+
+## One tail tests
+
+Shade to the left
+```{r}
+
+curve( dnorm( x, p, SDphat),
+       xlim=c(p-4*SDphat, p+4*SDphat),
+       lwd = 3, 
+       main="Sampling Distribution of The \n Sampling Proportion of Should Nots",
+       xlab="Proportion of Should Nots",
+       ylab="Density",
+       col = "purple",
+       )
+
+
+segments(phat, 0, phat, dnorm( phat, p, SDphat),
+         col="red",
+         lwd=5)
+
+polygon(x=c(0, 
+            seq(from=-1, to=phat, by=.0001),
+            phat),
+        y=c(0,
+            dnorm(seq(from=-1, to=phat, by=.0001),mean=p, sd=SDphat),
+            0),
+        col="yellow")
+
+```
+
+
+Shade to the right
+```{r}
+curve( dnorm( x, p, SDphat),
+       xlim=c(p-4*SDphat, p+4*SDphat),
+       lwd = 3, 
+       main="Sampling Distribution of The \n Sampling Proportion of Should Nots",
+       xlab="Proportion of Should Nots",
+       ylab="Density",
+       col = "purple",
+       )
+
+
+segments(phat, 0, phat, dnorm( phat, p, SDphat),
+         col="red",
+         lwd=5)
+
+polygon(x=c(phat, 
+            seq(from=phat, to=1, by=.0001),
+            1),
+        y=c(0,
+            dnorm(seq(from=phat, to=1, by=.0001),mean=p, SDphat),
+            0),
+        col="yellow")
+
+```
+
+Two tailed
+```{r}
+
+curve( dnorm( x, p, SDphat),
+       xlim=c(p-4*SDphat, p+4*SDphat),
+       lwd = 3, 
+       main="Sampling Distribution of The \n Sampling Proportion of Should Nots",
+       xlab="Proportion of Should Nots",
+       ylab="Density",
+       col = "purple",
+       )
+
+if (phat < p){ 
+  tail.1 <- phat
+  tail.2 <- -1*(phat-p) + p
+} else{
+    tail.2 <- phat
+    tail.1 <- -1*(phat-p) + p 
+}
+
+
+segments(tail.1, 0, tail.1, dnorm( tail.1, p, SDphat),
+         col="red",
+         lwd=5)
+
+polygon(x=c(0, 
+            seq(from=-1, to=tail.1, by=.0001),
+            tail.1),
+        y=c(0,
+            dnorm(seq(from=-1, to=tail.1, by=.0001),mean=p, sd=SDphat),
+            0),
+        col="yellow")
+
+
+
+segments(tail.2, 0, tail.2, dnorm( tail.2, p, SDphat),
+         col="red",
+         lwd=5)
+
+polygon(x=c(tail.2, 
+            seq(from=tail.2, to=1, by=.0001),
+            1),
+        y=c(0,
+            dnorm(seq(from=tail.2, to=1, by=.0001),mean=p, sd=SDphat),
+            0),
+        col="yellow")
+
+```
+

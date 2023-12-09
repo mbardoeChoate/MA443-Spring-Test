@@ -1,0 +1,190 @@
+---
+title: "Intro to Hypothesis Tests and p-value"
+author: "Carey Kopeikin"
+date: "2/21/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+
+Loading in data from Day 01 Intro to Hypothesis Tests
+```{r}
+scan <- read.csv("full_body_scan.csv")
+
+
+# x is the number of successes
+x <- sum(scan$answer == "should not")
+n <- length(scan$answer)
+phat <- x/n 
+qhat <- 1-phat
+p <- .17
+q <- 1-p
+```
+
+
+## One tail vs 2 tailed tests
+
+In the question from last class it should have been clear that the alternative hypothesis was: 
+
+$$ H_a: p < .17 $$
+
+Hopefully you can see how easy it would be to change this question such that the alternative hypothesis is:
+
+$$ H_a: p > .17 $$
+
+Both of these tests are considered one tailed tests. This is easy to recognize based on the graphs as the shaded in region extends in just on direction:
+
+```{r}
+
+#shade to the left
+
+curve( dnorm( x, p, sqrt(p*q/n)),
+       xlim=c(p-4*sqrt(p*q/n), p+4*sqrt(p*q/n)),
+       lwd = 3, 
+       main="Sampling Distribution of The \n Sampling Proportion of Should Nots",
+       xlab="Proportion of Should Nots",
+       ylab="Density",
+       col = "purple",
+       )
+
+
+segments(phat, 0, phat, dnorm( phat, p, sqrt(p*q/n)),
+         col="red",
+         lwd=5)
+
+polygon(x=c(0, 
+            seq(from=-1, to=phat, by=.0001),
+            phat),
+        y=c(0,
+            dnorm(seq(from=-1, to=phat, by=.0001),mean=p, sd=sqrt(p*q/n)),
+            0),
+        col="yellow")
+
+
+#shade to the right
+
+curve( dnorm( x, p, sqrt(p*q/n)),
+       xlim=c(p-4*sqrt(p*q/n), p+4*sqrt(p*q/n)),
+       lwd = 3, 
+       main="Sampling Distribution of The \n Sampling Proportion of Should Nots",
+       xlab="Proportion of Should Nots",
+       ylab="Density",
+       col = "purple",
+       )
+
+
+segments(phat, 0, phat, dnorm( phat, p, sqrt(p*q/n)),
+         col="red",
+         lwd=5)
+
+polygon(x=c(phat, 
+            seq(from=phat, to=1, by=.0001),
+            1),
+        y=c(0,
+            dnorm(seq(from=phat, to=1, by=.0001),mean=p, sd=sqrt(p*q/n)),
+            0),
+        col="yellow")
+
+```
+
+Now look at this question:
+
+Imagine that you are a politician and you are trying to decide if the many campaign commercials both for and against full body scans has affected the way people feel about full body scans. For many years 17% of the public though that there should not be full body scans. Have things changed?  
+
+Note that before we look at the data we are not sure if the commercials made people more or less likely to say that there should not be body scans. Thus our hypotheses will be:
+
+$$ H_0: p = .17 \\ H_a: p \neq .17 $$
+
+Note that you should state the hypotheses before looking at the data otherwise you might be tempted to cheat. 
+
+Now our graph looks like this:
+
+```{r}
+# shade two tails
+
+curve( dnorm( x, p, sqrt(p*q/n)),
+       xlim=c(p-4*sqrt(p*q/n), p+4*sqrt(p*q/n)),
+       lwd = 3, 
+       main="Sampling Distribution of The \n Sampling Proportion of Should Nots",
+       xlab="Proportion of Should Nots",
+       ylab="Density",
+       col = "purple",
+       )
+
+if (phat < p){ 
+  tail.1 <- phat
+  tail.2 <- -1*(phat-p) + p
+} else{
+    tail.2 <- phat
+    tail.1 <- -1*(phat-p) + p 
+}
+
+
+segments(tail.1, 0, tail.1, dnorm( tail.1, p, sqrt(p*q/n)),
+         col="red",
+         lwd=5)
+
+polygon(x=c(0, 
+            seq(from=-1, to=tail.1, by=.0001),
+            tail.1),
+        y=c(0,
+            dnorm(seq(from=-1, to=tail.1, by=.0001),mean=p, sd=sqrt(p*q/n)),
+            0),
+        col="yellow")
+
+
+
+segments(tail.2, 0, tail.2, dnorm( tail.2, p, sqrt(p*q/n)),
+         col="blue",
+         lwd=5)
+
+polygon(x=c(tail.2, 
+            seq(from=tail.2, to=1, by=.0001),
+            1),
+        y=c(0,
+            dnorm(seq(from=tail.2, to=1, by=.0001),mean=p, sd=sqrt(p*q/n)),
+            0),
+        col="green")
+
+```
+
+You may be thinking why the second tail? Remember the definition of p value is "the probability of getting results at least as extreme as observed, given that the null hypothesis is true." Since we were not sure whether to expect the value would be greater or less than the .17 we see both yellow area and the green area as being more extreme than our observed value (phat). What this means for our hypothesis test is that when we run it:
+
+```{r}
+prop.test(x, n, p, alternative = "less", correct = FALSE)
+
+```
+
+
+```{r}
+prop.test(x, n, p, alternative = "two.sided", correct = FALSE)
+```
+
+Our p-value of 0.06595 is exactly double that of the old value 0.03298. When evaluating the p-value (still with an alpha of .05) you would fail to reject the null hypothesis and would not have enough evidence that the true proportion was not 17%. Note that this does not mean the true proportion is not .17 just that there is not enough evidence to say that it is not 17%.
+
+
+## Your Turn
+
+Back many, many, years ago when I was in college 50% of ramen came in packs. To find out if that is still the case I took a random sample of ramen from a ratings website. That information is found in Ramen.Sample.csv. 
+
+a) Write appropriate hypotheses.
+
+c) Make a graph
+
+d) Perform the test and find the p-value.
+
+f) State your conclusion.
+
+g) Do you think this difference is meaningful? Explain.
+
+
+
+
+
+
+
+
+
