@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE, error=TRUE)
 
 ## Your Turn
 
-The csv ```get_it_dunn_run.csv``` contains information about the Get it Dunn Run https://www.openintro.org/data/index.php?data=get_it_dunn_run. 
+The csv ```../../data/get_it_dunn_run.csv``` contains information about the Get it Dunn Run https://www.openintro.org/data/index.php?data=get_it_dunn_run. 
 
 
 2. The planners of the run expected that 85% of those running would be doing the 5k but in reality it was closer to 79%. Could they just have gotten unlucky or were the numbers significantly different than what was expected?

@@ -32,7 +32,7 @@ h) State your conclusion.
 i) Do you think this difference is meaningful? Explain.
 
 
-2. Data on a random sample of 100 births for babies in North Carolina can be found in ```births.csv```. Government officials are wondering if their messaging has convinced mothers to smoke less. The goal was to to get under 40% of pregnant women to smoke. Did they succeed?
+2. Data on a random sample of 100 births for babies in North Carolina can be found in ```../../data/births.csv```. Government officials are wondering if their messaging has convinced mothers to smoke less. The goal was to to get under 40% of pregnant women to smoke. Did they succeed?
 
 a) Write appropriate hypotheses.
 
@@ -74,7 +74,7 @@ h) State your conclusion.
 
 
 
-4. A simple random sample of US adults in March 2013 were asked if they would vote for or against a law that would reduce US and Russian nuclear arsenals. The results are in the file ```nuclear_survey.csv``` Prior to the poll it was believed that 60% of Americans were for disarmament. Have things changed?
+4. A simple random sample of US adults in March 2013 were asked if they would vote for or against a law that would reduce US and Russian nuclear arsenals. The results are in the file ```../../data/nuclear_survey.csv``` Prior to the poll it was believed that 60% of Americans were for disarmament. Have things changed?
 
 a) Write appropriate hypotheses.
 

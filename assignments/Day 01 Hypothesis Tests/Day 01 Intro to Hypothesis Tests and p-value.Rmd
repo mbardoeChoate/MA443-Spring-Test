@@ -17,7 +17,7 @@ https://www.openintro.org/data/index.php?data=full_body_scan. You decide to supp
 ```{r}
 # load the data
 
-scan <- read.csv("full_body_scan.csv")
+scan <- read.csv("../../data/full_body_scan.csv")
 ```
 
 ```{r}
@@ -204,7 +204,7 @@ $$ H_0: p = .17 \\ H_a: p < .17 $$
 *Load data and collect summery statistics:
 ```{r}
 # read in the data
-scan <- read.csv("full_body_scan.csv")
+scan <- read.csv("../../data/full_body_scan.csv")
 
 # define variables
 x <- sum(scan$answer == "should not")

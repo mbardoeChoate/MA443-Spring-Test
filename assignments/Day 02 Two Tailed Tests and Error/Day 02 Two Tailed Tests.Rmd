@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE, error=TRUE)
 
 Loading in data from Day 01 Intro to Hypothesis Tests
 ```{r}
-scan <- read.csv("full_body_scan.csv")
+scan <- read.csv("../../data/full_body_scan.csv")
 
 
 # x is the number of successes
