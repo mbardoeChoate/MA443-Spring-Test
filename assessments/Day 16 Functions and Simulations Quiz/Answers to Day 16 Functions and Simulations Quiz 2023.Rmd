@@ -1,0 +1,139 @@
+---
+title: "Day 16 Functions and Simulations Quiz"
+author: "Carey Kopeikin"
+date: "1/22/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE)
+```
+
+### **Honor Code:** 
+
+This quiz is open note, open book, open internet. You may not seek help from or give help to anyone. You may ask questions of me but if I answer them I am likely to take off points. I will tell you that I will take off points before I answer the question and give you the option of losing the points or trying to figure out the question on your own.  
+
+
+Type your name below indicating you are signing the honor code.
+
+On my honor I have given nor received unauthorized aid.
+*(type name here to sign)*
+
+
+*Instructions*
+
+
+
+1. *Solitaire*
+
+a. My father's favorite way to waste time is to play solitaire on the computer and he wins 80% of his games. Before going to bed he needs to win 5 games. Create a function that uses a loop to simulate how many games he has to play until he wins 5 games. The function does not need any arguments. The output should be the number of games he needed to play in order to get 5 wins. 
+
+```{r}
+solitare.fun <- function(){
+  
+  number.of.games <- 0
+  number.of.wins <- 0
+  
+  repeat{
+    
+    number.of.games <- number.of.games + 1
+    
+    game.result <- sample( 1:100, 1)
+    
+    if( game.result <= 80){ number.of.wins <- number.of.wins + 1}
+    
+    if( number.of.wins == 5){break}
+    
+  }
+  
+  return(number.of.games)
+}
+```
+
+b. On average how many games does he have to play in order to win 5 games. To answer this question run the function a thousand times and report the average games he must play to win 5 games.
+```{r}
+set.seed(1)
+```
+
+```{r}
+thousand.solitare <- replicate(1000, solitare.fun() )
+mean(thousand.solitare)
+```
+
+
+
+
+4. *Covid*
+
+The following function answers this question:
+
+According to the Washington Post 60% of Americans have had Covid at least once. Create a function that simulates how many students in a class of 20 have had Covid. 
+
+
+```{r}
+covid <- function(  ){
+  
+  have.covid <- 0
+  student.number <- 0
+  
+  repeat{
+    
+    student.number <- student.number + 1
+    
+    covid.test <- sample(1:100, 1)
+    
+    if( covid.test <= 60){ have.covid <- have.covid +1 }
+    
+    if( student.number == 20){ break}
+  }
+  return( have.covid)
+}
+```
+
+
+
+
+Change the function above so that it answers the following question:
+
+A certain percentage of Americans have had Covid at least once. Create a function that takes two arguments, the percentage of Americans that have had Covid and the number of students in a class. The function should simulate how many of those students have had Covid. 
+
+
+
+```{r}
+covid <- function( percent.have.covid, number.of.students ){
+  
+  have.covid <- 0
+  student.number <- 0
+  
+  repeat{
+    
+    student.number <- student.number + 1
+    
+    covid.test <- sample(1:100, 1)
+    
+    if( covid.test <= percent.have.covid){ have.covid <- have.covid +1 }
+    
+    if( student.number == number.of.students){ break}
+  }
+  return( have.covid)
+}
+```
+
+```{r}
+covid(100, 50)
+covid(50,100)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
